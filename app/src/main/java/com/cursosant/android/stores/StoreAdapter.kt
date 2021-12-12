@@ -23,13 +23,7 @@ class StoreAdapter(private var stores: MutableList<Store>, private var listener:
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val store = stores.get(position)
 
-        with(holder){
-            setListener(store)
-            binding.tvName.text = store.name
-
-        }
     }
 
     override fun getItemCount(): Int = stores.size
