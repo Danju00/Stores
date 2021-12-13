@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         mBbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBbinding.root)
 
-        mBbinding.btnSave.setOnClickListener {
+       /* mBbinding.btnSave.setOnClickListener {
 
             val store = StoreEntity (name = mBbinding.etName.text.toString().trim())
             Thread {
@@ -26,9 +26,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 StoreApplication.database.storeDao().addAllStore(store)
             }.start()
             mAdapter.add(store)
-        }
+        }*/
+        mBbinding.fab.setOnClickListener {  launchEditFragment() }
 
         setupRecylcerView()
+    }
+
+    private fun launchEditFragment() {
+        val fragment= EditStoreFragment()
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.add(R.id.containerMain, fragment)
+        fragmentTransaction.commit()
+
+        mBbinding.fab.hide()
     }
 
 
