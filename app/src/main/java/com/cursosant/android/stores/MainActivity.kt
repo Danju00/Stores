@@ -19,11 +19,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         mBbinding.btnSave.setOnClickListener {
 
             val store = StoreEntity (name = mBbinding.etName.text.toString().trim())
+            Thread {
+
+                StoreApplication.database.storeDao().addAllStore(store)
+            }.start()
             mAdapter.add(store)
         }
 
         setupRecylcerView()
     }
+
 
     private fun setupRecylcerView() {
         mAdapter = StoreAdapter(mutableListOf(), listener = this)
