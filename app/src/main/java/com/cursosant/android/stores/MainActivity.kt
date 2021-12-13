@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         fragmentTransaction.add(R.id.containerMain, fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         mBbinding.fab.hide()
