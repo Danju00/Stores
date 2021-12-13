@@ -7,7 +7,7 @@ import com.cursosant.android.stores.databinding.ActivityMainBinding
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
     private lateinit var mBbinding: ActivityMainBinding
 
     private lateinit var mAdapter: StoreAdapter
@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
-        mBbinding.fab.hide()
+       //mBbinding.fab.hide()
+        hideFab()
     }
 
 
@@ -94,5 +95,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 mAdapter.delete(storeEntity)
             }
         }
+    }
+
+    /**
+     * MainAux
+     */
+    override fun hideFab(isVisible: Boolean) {
+        if(isVisible) mBbinding.fab.show() else mBbinding.fab.hide()
     }
 }
