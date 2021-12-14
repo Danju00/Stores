@@ -49,18 +49,28 @@ class EditStoreFragment : Fragment() {
         mActivity?.supportActionBar?.title= getString(R.string.edit_store_title_add)
 
         setHasOptionsMenu(true)
+        setupTextFields{}
 
-        mBinding.etPhotoUrl.addTextChangedListener(
-            Glide.with(this).load(mBinding.etPhotoUrl.text.toString()).diskCacheStrategy(DisKCacheStrategy.ALL)
-                .centerCrop()
-                .into(mBinding.imgPhoto)
-        )
+    }
 
-        mBinding.etName.addTextChangedListener { validateFields(mBinding.tiName)}
-        mBinding.etPhone.addTextChangedListener { validateFields(mBinding.tilPhone)}
-        mBinding.etPhotoUrl.addTextChangedListener { validateFields(mBinding.tilPhotoUrl)}
+    private fun setupTextFields() {
 
 
+        with(mBinding) {
+            etName.addTextChangedListener { validateFields(tiName) }
+            etPhone.addTextChangedListener { validateFields(tilPhone) }
+            etPhotoUrl.addTextChangedListener { validateFields(tilPhotoUrl) }
+            validateFields(mtilPhotoUrl)
+            loadImage(it.toString().trim)
+        }
+
+    }
+
+    }
+    private fun loadImage (url: String ){
+        Glide.with(this).load(url).diskCacheStrategy(DisKCacheStrategy.ALL)
+            .centerCrop()
+            .into(mBinding.imgPhoto)
     }
 
     private fun getStore(id: Long) {
