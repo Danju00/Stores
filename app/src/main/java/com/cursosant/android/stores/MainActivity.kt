@@ -133,22 +133,28 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
             action = Intent.ACTION_DIAL
             data = Uri.parse(uriString: "tel:$phone")
         }
+
+        if (callIntent.resolverActivity(packageManager)!=null)
         startActivity(callIntent)
+        else
+            Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
 
     }
      private fun goToWebsite(website: ContactsContract.CommonDataKinds.Website: String){
          if (website.isEmpty()) {
              Toast.makeText(this,R.string.main_error_no_website, Toast.LENGTH_SHORT).show()
-         }
 
          } else {
              val websiteIntent = Intent().apply{
                  action = Intent.ACTION_VIEW
                  data = Uri.parse(website)
-
-
          }
-         startActivity(websiteIntent)
+             if (websiteIntent.resolverActivity(packageManager)!=null)
+                 startActivity(websiteIntent)
+             else
+                 Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+
+
      }
 
     /**
