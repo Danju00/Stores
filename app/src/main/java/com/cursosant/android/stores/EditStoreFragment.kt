@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 import org.jetbrains.anko.uiThread
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,6 +39,13 @@ class EditStoreFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        mBinding.etPhotoUrl.addTextChangedListener(
+            Glide.with(this).load(mBinding.etPhotoUrl.text.toString()).diskCacheStrategy(DisKCacheStrategy.ALL)
+                .centerCrop()
+                .into(mBinding.imgPhoto)
+        )
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -63,10 +72,12 @@ class EditStoreFragment : Fragment() {
 
                         hideKeyboard()
 
-                        Snackbar.make(mBinding.root, getString(R.string.edit_store_message_save_success),
-                            getString(R.string.edit_store_message_save_success)
-                                    Snackbar.LENGTH_SHORT)
-                            .show()
+//                        Snackbar.make(mBinding.root, getString(R.string.edit_store_message_save_success),
+//                            getString(R.string.edit_store_message_save_success)
+//                                    Snackbar.LENGTH_SHORT)
+//                            .show()
+                        Toast.makeText(mActivity, R.string.edit_store_message_save_success, Toast.LENGTH_SHORT).show()
+
                         mActivity.onBackPressed()
                     }
                 }
