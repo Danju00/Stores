@@ -57,13 +57,29 @@ class EditStoreFragment : Fragment() {
     private fun getStore(id: Long) {
         doAsync {
             mStoreEntity= StoreApplication.database.storeDao().getStoreById(id)
-            uiThread {
+            uiThread { if (mStoreEntity!= null) setUiStore (mStoreEntity!!)
 
             }
         }
     }
 
-}
+    private fun setUiStore(storeEntity: StoreEntity) {
+        with(mBinding){
+            etName.setText = (storeEntity.name)
+            etPhone.setText(storeEntity.phone)
+            etPhone.setText(storeEntity.website)
+            etPhone.setText(storeEntity.photoUrl)
+            Glide.with(activity!!)
+                .load(storeEntity.photoUrl)
+                .diskCacheStrategy (DiskCacheStrategy.All)
+                .centerCrop()
+                .into(mBinding.imgPhoto)
+
+        }
+
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save, menu)
