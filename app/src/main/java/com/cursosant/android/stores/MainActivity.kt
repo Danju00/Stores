@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
 
     private fun setupRecylcerView() {
         mAdapter = StoreAdapter(mutableListOf(), listener = this)
-        mGridLayout= GridLayoutManager(this, 2)
+        mGridLayout= GridLayoutManager(this, resources.getInteger(R.integer.main_colums))
         getStore()
 
         mBbinding.recyclerView.apply {  this: RecyclerView
