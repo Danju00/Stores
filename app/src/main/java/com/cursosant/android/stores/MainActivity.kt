@@ -115,6 +115,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
 
     }
     private fun confirmDelete (storeEntity: StoreEntity){
+        val items = resources.getStringArray(R.array.array_options_item)
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_delete_title)
             .setPositiveButton(R.string.dialog_delete_confirm,  { dialogInterface, i ->
@@ -134,10 +135,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
             data = Uri.parse(uriString: "tel:$phone")
         }
 
-        if (callIntent.resolverActivity(packageManager)!=null)
-        startActivity(callIntent)
-        else
-            Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+       startIntent(callIntent)
 
     }
      private fun goToWebsite(website: ContactsContract.CommonDataKinds.Website: String){
@@ -145,17 +143,22 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
              Toast.makeText(this,R.string.main_error_no_website, Toast.LENGTH_SHORT).show()
 
          } else {
-             val websiteIntent = Intent().apply{
+             val websiteIntent = Intent().apply {
                  action = Intent.ACTION_VIEW
                  data = Uri.parse(website)
+             }
+
+             startIntent(websiteIntent)
+
+
          }
-             if (websiteIntent.resolverActivity(packageManager)!=null)
-                 startActivity(websiteIntent)
-             else
-                 Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
-
-
      }
+    private fun startIntent (intent: Intent){
+        if (websiteIntent.resolverActivity(packageManager) != null)
+        startActivity(websiteIntent)
+    else
+        Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+    }
 
     /**
      * MainAux
