@@ -93,7 +93,7 @@ class EditStoreFragment : Fragment() {
 
             }
             R.id.action_save -> {
-                if (mStoreEntity != null) {
+                if (mStoreEntity != null && validateFields()) {
 //                val store = StoreEntity(name = mBinding.etName.text.toString().trim(),
 //                    phone = mBinding.etPhone.text.toString().trim(),
 //                    website= mBinding.etWebsite.text.toString().trim(),
@@ -145,6 +145,20 @@ class EditStoreFragment : Fragment() {
         }
        // return super.onOptionsItemSelected(item)
     }
+
+    private fun validateFields(): Boolean {
+        var isValid = true
+
+        if (mBinding.etName.text.toString().trim().isEmpty()){
+            mBinding.tilPhone.error = getString(R.string.helper_required)
+            mBinding.etName.requestFocus()
+            isValid = false
+        }
+
+        return isValid
+
+    }
+
     private fun hideKeyboard(){
         val imm = mActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (view != null) {
