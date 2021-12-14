@@ -2,6 +2,7 @@ package com.cursosant.android.stores
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -64,20 +65,17 @@ class EditStoreFragment : Fragment() {
     }
 
     private fun setUiStore(storeEntity: StoreEntity) {
-        with(mBinding){
-            etName.setText = (storeEntity.name)
-            etPhone.setText(storeEntity.phone)
-            etPhone.setText(storeEntity.website)
-            etPhone.setText(storeEntity.photoUrl)
-            Glide.with(activity!!)
-                .load(storeEntity.photoUrl)
-                .diskCacheStrategy (DiskCacheStrategy.All)
-                .centerCrop()
-                .into(mBinding.imgPhoto)
+        with(mBinding) {
+            etName. text = storeEntity.name.editable()
+            etPhone.text = storeEntity.phone.editable()
+            etPhone.text =  storeEntity.website.editable()
+            etPhone.text = storeEntity.photoUrl.editable()
+
 
         }
 
     }
+    private fun String.editable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 
 
