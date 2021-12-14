@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cursosant.android.stores.databinding.ActivityMainBinding
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
                     0 -> confirmDelete(storeEntity)
 
                     1 -> dial(storeEntity.phone)
-                    2 -> Toast.makeText(this, "Sito web",Toast.LENGTH_SHORT).show()
+                    2 -> goToWebsite(storeEntity.website)
                 }
             })
 
@@ -135,6 +136,20 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
         startActivity(callIntent)
 
     }
+     private fun goToWebsite(website: ContactsContract.CommonDataKinds.Website: String){
+         if (website.isEmpty()) {
+             Toast.makeText(this,R.string.main_error_no_website, Toast.LENGTH_SHORT).show()
+         }
+
+         } else {
+             val websiteIntent = Intent().apply{
+                 action = Intent.ACTION_VIEW
+                 data = Uri.parse(website)
+
+
+         }
+         startActivity(websiteIntent)
+     }
 
     /**
      * MainAux
