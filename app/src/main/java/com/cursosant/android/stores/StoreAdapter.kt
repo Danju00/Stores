@@ -29,6 +29,12 @@ class StoreAdapter(private var stores: MutableList<StoreEntity>, private var lis
             setListener(store)
             binding.tvName.text = store.name
             binding.cbFavorite.isChecked = store.isFavorite
+
+            Glide.whit(mContext)
+                .load(store).photoUrl)
+                .diskCacheStrategy(DiskCacheStragy.ALL)
+                .centerCrop()
+                .into(binding.imgPhoto)
         }
 
     }
