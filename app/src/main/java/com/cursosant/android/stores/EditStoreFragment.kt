@@ -12,8 +12,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 import org.jetbrains.anko.uiThread
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -21,6 +19,8 @@ private const val ARG_PARAM2 = "param2"
 class EditStoreFragment : Fragment() {
     private lateinit var mBinding: FragmentEditStoreBinding
     private var mActivity: MainActivity? = null
+    private  var mIsEditMode: Boolean = false
+    private var mStoreEntity: StoreEntity? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,8 @@ class EditStoreFragment : Fragment() {
 
         val id = arguments?.getLong(getString(R.string.arg_id), 0)
         if(id != null && id != 0L){
-            Toast.makeText(activity, id.toString(), Toast.LENGTH_SHORT).show()
+            mIsEditMode = true
+            getStore(id)
         } else{
             Toast.makeText(activity, id.toString(), Toast.LENGTH_SHORT).show()
         }
@@ -53,7 +54,16 @@ class EditStoreFragment : Fragment() {
         )
         }
 
+    private fun getStore(id: Long) {
+        doAsync {
+            mStoreEntity= StoreApplication.database.storeDao().getStoreById(id)
+            uiThread {
+
+            }
+        }
     }
+
+}
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save, menu)

@@ -1,10 +1,13 @@
 package com.cursosant.android.stores
-import androidx.room.Dao
+import androidx.room.*
 
 @Dao
 interface StoreDao {
-    @Query (value: "SELECT * FROM StoreEntity")
+    @Query (value = "SELECT * FROM StoreEntity")
     fun getAllStore(): MutableList<StoreEntity>
+
+    @Query(value = " SELECT * FROM StoreEntity where id = id")
+    fun getStoreById (id: Long): StoreEntity
 
     @Insert
     fun addAllStore(storeEntity: StoreEntity): Long
