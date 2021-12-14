@@ -57,7 +57,7 @@ class EditStoreFragment : Fragment() {
                     website= mBinding.etWebsite.text.toString().trim())
 
                 doAsync {
-                    StoreApplication.database.storeDao().addAllStore(store)
+                    store.id= StoreApplication.database.storeDao().addAllStore(store)
                     uiThread {
                         mActivity.addStore(store)
 
