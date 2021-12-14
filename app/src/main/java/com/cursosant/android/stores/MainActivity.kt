@@ -3,6 +3,7 @@ package com.cursosant.android.stores
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cursosant.android.stores.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -96,6 +97,21 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
     }
 
     override fun onDeleteStore(storeEntity: StoreEntity) {
+        val items = arrayOf("Eliinar", "Llamar", "Ir al web site")
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialog_options_title)
+            .setItems(items,  { dialog, i ->
+                when (i){
+                    0 -> confirmDelete(storeEntity)
+
+                    1 -> Toast.makeText(this,"Llamar...", Toast.LENGTH_SHORT).show()
+                    2 -> Toast.makeText(this, "Sito web",Toast.LENGTH_SHORT).show()
+                }
+            })
+
+    }
+    private fun confirmDelete (storeEntity: StoreEntity){
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_delete_title)
             .setPositiveButton(R.string.dialog_delete_confirm,  { dialogInterface, i ->
@@ -107,9 +123,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
                     }
                 }
             })
-            .setNegativeButton(R.string.dialog_delete_cancel , null)
-
-
+            .setNegativeButton(R.string.dialog_delete_cancel , null).show()
     }
 
     /**
