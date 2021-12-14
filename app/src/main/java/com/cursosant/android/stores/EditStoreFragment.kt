@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 import org.jetbrains.anko.uiThread
@@ -93,7 +94,8 @@ class EditStoreFragment : Fragment() {
 
             }
             R.id.action_save -> {
-                if (mStoreEntity != null && validateFields()) {
+                if (mStoreEntity != null &&
+                    validateFields(mBinding.tilPhotoUrl, mBinding.tilPhotoUrl, mBinding.tiName)) {
 //                val store = StoreEntity(name = mBinding.etName.text.toString().trim(),
 //                    phone = mBinding.etPhone.text.toString().trim(),
 //                    website= mBinding.etWebsite.text.toString().trim(),
@@ -144,6 +146,19 @@ class EditStoreFragment : Fragment() {
             else-> return super.onOptionsItemSelected(item)
         }
        // return super.onOptionsItemSelected(item)
+    }
+    private fun validateFields(vararg textFields : TextInputLayout): Boolean{
+        var isValid = true
+        for (textFiel in textFields){
+            if (textFiel.editText?.text.toString().trim().isEmpty()){
+                textFiel.error = getString(R.string.helper_required)
+                textFiel.editText?.requestFocus()
+                isValid=false
+            }
+        }
+        if (!isValid) Snackbar.make(mBinding.root, R.string.edit_store_message_valid, Snackbar.LENGTH_SHORT).show()
+
+        return isValid
     }
 
     private fun validateFields(): Boolean {
