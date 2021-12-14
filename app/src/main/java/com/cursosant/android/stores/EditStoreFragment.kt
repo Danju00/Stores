@@ -5,6 +5,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import com.cursosant.android.stores.databinding.FragmentEditStoreBinding
 import com.google.android.material.snackbar.Snackbar
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,12 +45,27 @@ class EditStoreFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
-                mActivity.onBackPressed()
+                mActivity?.onBackPressed()
                 true
 
             }
             R.id.action_save -> {
+                val store = StoreEntity(name = mBinding.etName.text.toString().trim(),
+                    phone = mBinding.etPhone.text.toString().trim(),
+                    website= mBinding.etWebsite.text.toString().trim())
+
+                doAsync {
+                    StoreApplication.database.storeDao().addAllStore(store)
+                    uiThread {
+                        Snackbar.make(mBinding.root, getString(R.string.edit_store_message_save_success),
+                            getString(R.string.edit_store_message_save_success)
+                                    Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
                 Snackbar.make(mBinding.root, getString(R.string.edit_store_message_save_success),
+                    getString(R.string.edit_store_message_save_success)
                     Snackbar.LENGTH_SHORT)
                     .show()
                 true
