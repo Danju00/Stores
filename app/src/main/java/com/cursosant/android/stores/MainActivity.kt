@@ -1,6 +1,8 @@
 package com.cursosant.android.stores
 
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
         }
     }
 
-    override fun onDeleteStore(storeEntity: StoreEntity) {
+    override fun onDeleteStore(store Entity: StoreEntity) {
         val items = arrayOf("Eliinar", "Llamar", "Ir al web site")
 
         MaterialAlertDialogBuilder(this)
@@ -105,7 +107,7 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
                 when (i){
                     0 -> confirmDelete(storeEntity)
 
-                    1 -> Toast.makeText(this,"Llamar...", Toast.LENGTH_SHORT).show()
+                    1 -> dial(storeEntity.phone)
                     2 -> Toast.makeText(this, "Sito web",Toast.LENGTH_SHORT).show()
                 }
             })
@@ -124,6 +126,14 @@ class MainActivity : AppCompatActivity(), OnClickListener, MainAux {
                 }
             })
             .setNegativeButton(R.string.dialog_delete_cancel , null).show()
+    }
+    private fun dial(phone : String){
+        val callIntent = Intent().apply {
+            action = Intent.ACTION_DIAL
+            data = Uri.parse(uriString: "tel:$phone")
+        }
+        startActivity(callIntent)
+
     }
 
     /**
